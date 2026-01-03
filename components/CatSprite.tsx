@@ -33,7 +33,7 @@ const CatSprite: React.FC<CatSpriteProps> = ({ mood, isInteracting, thought }) =
             stroke="#FDBA74" 
             strokeWidth="12" 
             strokeLinecap="round"
-            className="origin-bottom animate-[wiggle_2s_ease-in-out_infinite]"
+            className={`origin-bottom ${isHappy ? 'animate-[wiggle_0.8s_ease-in-out_infinite]' : 'animate-[wiggle_2s_ease-in-out_infinite]'}`}
           />
           
           {/* 身体 */}
@@ -72,10 +72,14 @@ const CatSprite: React.FC<CatSpriteProps> = ({ mood, isInteracting, thought }) =
           )}
 
           {/* 胡须 */}
-          <line x1="40" y1="95" x2="10" y2="90" stroke="#FDBA74" strokeWidth="2" />
-          <line x1="40" y1="105" x2="10" y2="110" stroke="#FDBA74" strokeWidth="2" />
-          <line x1="160" y1="95" x2="190" y2="90" stroke="#FDBA74" strokeWidth="2" />
-          <line x1="160" y1="105" x2="190" y2="110" stroke="#FDBA74" strokeWidth="2" />
+          <g className={isHappy ? "origin-[40px_100px] animate-[whisker-twitch_2s_ease-in-out_infinite]" : ""}>
+            <line x1="40" y1="95" x2="10" y2="90" stroke="#FDBA74" strokeWidth="2" />
+            <line x1="40" y1="105" x2="10" y2="110" stroke="#FDBA74" strokeWidth="2" />
+          </g>
+          <g className={isHappy ? "origin-[160px_100px] animate-[whisker-twitch_2s_ease-in-out_infinite_0.3s]" : ""}>
+            <line x1="160" y1="95" x2="190" y2="90" stroke="#FDBA74" strokeWidth="2" />
+            <line x1="160" y1="105" x2="190" y2="110" stroke="#FDBA74" strokeWidth="2" />
+          </g>
         </svg>
 
         {/* 爪子 */}
@@ -93,6 +97,11 @@ const CatSprite: React.FC<CatSpriteProps> = ({ mood, isInteracting, thought }) =
         @keyframes wiggle {
           0%, 100% { transform: rotate(-5deg); }
           50% { transform: rotate(5deg); }
+        }
+        @keyframes whisker-twitch {
+          0%, 100% { transform: rotate(0deg); }
+          25% { transform: rotate(3deg); }
+          75% { transform: rotate(-1deg); }
         }
       `}</style>
     </div>
