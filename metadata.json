@@ -1,0 +1,7 @@
+{
+  "name": "Mochi: Your AI Kitty Companion",
+  "description": "An interactive, AI-powered virtual pet cat that provides emotional support, conversation, and fun activities through the Gemini API.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
