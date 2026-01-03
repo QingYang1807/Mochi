@@ -1,7 +1,7 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { CatInstance } from '../types';
-import { CAT_ASSETS } from '../constants';
+import RealisticCat from './RealisticCat';
 
 interface CatItemProps {
   cat: CatInstance;
@@ -13,7 +13,6 @@ interface CatItemProps {
 }
 
 const CatItem: React.FC<CatItemProps> = ({ cat, vx, isJumping, onJumpEnd, onClick, thought }) => {
-  const [hasError, setHasError] = useState(false);
   
   useEffect(() => {
     if (isJumping) {
@@ -25,6 +24,7 @@ const CatItem: React.FC<CatItemProps> = ({ cat, vx, isJumping, onJumpEnd, onClic
   }, [isJumping, onJumpEnd]);
 
   const isFlipped = vx < 0;
+  const isWalking = Math.abs(vx) > 0.01;
 
   return (
     <div 
@@ -46,31 +46,24 @@ const CatItem: React.FC<CatItemProps> = ({ cat, vx, isJumping, onJumpEnd, onClic
       )}
 
       <div className="relative flex flex-col items-center group">
-        {/* 猫咪主体 */}
         <div 
           className={`relative transition-transform duration-500 ${isJumping ? 'animate-cat-jump' : ''}`}
           style={{ transform: `scale(${isFlipped ? -cat.scale : cat.scale}, ${cat.scale})` }}
         >
-          {hasError ? (
-            <div className="w-20 h-20 md:w-24 bg-white/80 backdrop-blur-sm rounded-full flex flex-col items-center justify-center border-4 border-orange-200 shadow-inner">
-               <span className="text-4xl">🐱</span>
-               <span className="text-[8px] font-bold text-orange-400 mt-1">{cat.name}</span>
-            </div>
-          ) : (
-            <img 
-              src={CAT_ASSETS[cat.type]} 
-              alt={cat.name} 
-              onError={() => setHasError(true)}
-              className="w-24 h-auto md:w-32 drop-shadow-[0_10px_10px_rgba(0,0,0,0.3)] cat-idle-float select-none pointer-events-none"
-            />
-          )}
+          {/* 使用全新骨骼动画组件 */}
+          <RealisticCat 
+            type={cat.type} 
+            isJumping={isJumping} 
+            isWalking={isWalking}
+            scale={cat.scale}
+          />
         </div>
         
         {/* 动态阴影 */}
-        <div className={`w-12 h-1.5 bg-black/15 blur-sm rounded-full -mt-1 transition-all duration-500 ${isJumping ? 'scale-50 opacity-10' : 'scale-100 opacity-40'}`}></div>
+        <div className={`w-12 h-1.5 bg-black/15 blur-sm rounded-full -mt-2 transition-all duration-500 ${isJumping ? 'scale-50 opacity-10' : 'scale-100 opacity-40'}`}></div>
 
-        {/* 名字显示 - 悬停显示 */}
-        <div className="absolute -bottom-6 opacity-0 group-hover:opacity-100 transition-opacity bg-black/40 text-white text-[10px] px-2 py-0.5 rounded-full backdrop-blur-sm">
+        {/* 名字显示 */}
+        <div className="absolute -bottom-2 opacity-0 group-hover:opacity-100 transition-opacity bg-black/40 text-white text-[10px] px-2 py-0.5 rounded-full backdrop-blur-sm">
            {cat.name}
         </div>
       </div>
@@ -79,20 +72,11 @@ const CatItem: React.FC<CatItemProps> = ({ cat, vx, isJumping, onJumpEnd, onClic
         @keyframes cat-jump {
           0%, 100% { transform: translateY(0) scale(1, 1); }
           10% { transform: translateY(0) scale(1.1, 0.9); }
-          40% { transform: translateY(-60px) scale(0.9, 1.1); }
-          60% { transform: translateY(-60px) scale(0.95, 1.05); }
+          40% { transform: translateY(-70px) scale(0.9, 1.1); }
           90% { transform: translateY(0) scale(1.05, 0.95); }
         }
         .animate-cat-jump {
           animation: cat-jump 0.7s cubic-bezier(0.45, 0.05, 0.55, 0.95);
-        }
-        .cat-idle-float {
-          animation: idle-float 4s ease-in-out infinite;
-        }
-        @keyframes idle-float {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          25% { transform: translateY(-2px) rotate(1deg); }
-          75% { transform: translateY(-2px) rotate(-1deg); }
         }
       `}</style>
     </div>
