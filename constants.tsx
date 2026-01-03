@@ -23,10 +23,10 @@ export const MOOD_EMOJIS = {
   SAD: '😿'
 };
 
-// Moved CAT_ASSETS here so it can be shared between App.tsx and CatItem.tsx
+// 选用更稳定的 CDN 链接，并提供多样性
 export const CAT_ASSETS = {
-  ragdoll: 'https://images.unsplash.com/photo-1548546738-8509cb246ed3?auto=format&fit=crop&q=80&w=200',
-  british: 'https://images.unsplash.com/photo-1513245543132-31f507417b26?auto=format&fit=crop&q=80&w=200',
-  calico: 'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&q=80&w=200',
-  tuxedo: 'https://images.unsplash.com/photo-1533738363-b7f9aef128ce?auto=format&fit=crop&q=80&w=200'
+  ragdoll: 'https://pngimg.com/uploads/cat/cat_PNG50493.png',
+  british: 'https://pngimg.com/uploads/cat/cat_PNG50433.png',
+  calico: 'https://pngimg.com/uploads/cat/cat_PNG50480.png',
+  tuxedo: 'https://pngimg.com/uploads/cat/cat_PNG50422.png'
 };
